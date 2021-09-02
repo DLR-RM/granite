@@ -1,0 +1,33 @@
+[submodule "thirdparty/CLI11"]
+	path = thirdparty/CLI11
+	url = https://github.com/CLIUtils/CLI11.git
+[submodule "thirdparty/opengv"]
+	path = thirdparty/opengv
+	url = https://github.com/laurentkneip/opengv.git
+[submodule "thirdparty/Pangolin"]
+	path = thirdparty/Pangolin
+	url = https://github.com/stevenlovegrove/Pangolin.git
+[submodule "thirdparty/granite-headers/thirdparty/Sophus"]
+	path = thirdparty/granite-headers/thirdparty/Sophus
+	url = https://github.com/strasdat/Sophus.git
+[submodule "thirdparty/granite-headers/thirdparty/cereal"]
+	path = thirdparty/granite-headers/thirdparty/cereal
+	url = https://github.com/USCiLab/cereal.git
+[submodule "thirdparty/granite-headers/thirdparty/eigen"]
+	path = thirdparty/granite-headers/thirdparty/eigen
+	url = https://gitlab.com/libeigen/eigen.git
+[submodule "thirdparty/granite-headers/test/googletest"]
+	path = thirdparty/granite-headers/test/googletest
+	url = https://github.com/google/googletest.git
+[submodule "thirdparty/granite-headers/test/benchmark"]
+	path = thirdparty/granite-headers/test/benchmark
+	url = https://github.com/google/benchmark.git
+[submodule "thirdparty/ros/console_bridge"]
+	path = thirdparty/ros/console_bridge
+	url = https://github.com/ros/console_bridge.git
+[submodule "thirdparty/ros/ros_comm"]
+	path = thirdparty/ros/ros_comm
+	url = https://github.com/ros/ros_comm.git
+[submodule "thirdparty/ros/roscpp_core"]
+	path = thirdparty/ros/roscpp_core
+	url = https://github.com/ros/roscpp_core.git
