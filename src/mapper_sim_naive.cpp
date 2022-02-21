@@ -6,11 +6,22 @@ https://github.com/DLR-RM/granite
 
 Copyright (c) Martin Wudenka, Deutsches Zentrum für Luft- und Raumfahrt
 
-Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+Permission is hereby granted, free of charge, to any person obtaining a copy of
+this software and associated documentation files (the "Software"), to deal in
+the Software without restriction, including without limitation the rights to
+use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
+the Software, and to permit persons to whom the Software is furnished to do so,
+subject to the following conditions:
 
-The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
 
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS
+FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
+COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
+IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
+CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
 /**
@@ -123,7 +134,7 @@ granite::KeypointVioEstimator::Ptr vio;
 // Visualization vars
 std::unordered_map<int64_t, granite::VioVisualizationData::Ptr> vis_map;
 tbb::concurrent_bounded_queue<granite::VioVisualizationData::Ptr> out_vis_queue;
-tbb::concurrent_bounded_queue<granite::PoseVelBiasState::Ptr> out_state_queue;
+tbb::concurrent_bounded_queue<granite::VioStateData::Ptr> out_state_queue;
 
 std::vector<pangolin::TypedImage> images;
 
@@ -254,20 +265,20 @@ int main(int argc, char** argv) {
   });
 
   std::thread t3([&]() {
-    granite::PoseVelBiasState::Ptr data;
+    granite::VioStateData::Ptr data;
 
     while (true) {
       out_state_queue.pop(data);
 
       if (!data.get()) break;
 
-      int64_t t_ns = data->t_ns;
+      int64_t t_ns = data->state.t_ns;
 
       // std::cerr << "t_ns " << t_ns << std::endl;
-      Sophus::SE3d T_w_i = data->T_w_i;
-      Eigen::Vector3d vel_w_i = data->vel_w_i;
-      Eigen::Vector3d bg = data->bias_gyro;
-      Eigen::Vector3d ba = data->bias_accel;
+      Sophus::SE3d T_w_i = data->state.T_w_i;
+      Eigen::Vector3d vel_w_i = data->state.vel_w_i;
+      Eigen::Vector3d bg = data->state.bias_gyro;
+      Eigen::Vector3d ba = data->state.bias_accel;
 
       vio_t_w_i.emplace_back(T_w_i.translation());
 
@@ -385,11 +396,14 @@ int main(int argc, char** argv) {
 
     GRANITE_ASSERT(kf_t_ns.size() == vio_t_w_i.size());
 
-    double error =
-        granite::alignSVD(kf_t_ns, vio_t_w_i, gt_frame_t_ns, gt_frame_t_w_i);
+    Sophus::SE3d T_gt_est;
+    Sophus::Sim3d sT_gt_est;
+
+    auto error = granite::alignSVD(kf_t_ns, vio_t_w_i, gt_frame_t_ns,
+                                   gt_frame_t_w_i, T_gt_est, sT_gt_est);
 
     std::ofstream os(result_path);
-    os << error << std::endl;
+    os << error.first << std::endl;
     os.close();
   }
 
@@ -776,5 +790,9 @@ void alignButton() {
 
   GRANITE_ASSERT(kf_t_ns.size() == vio_t_w_i.size());
 
-  granite::alignSVD(kf_t_ns, vio_t_w_i, gt_frame_t_ns, gt_frame_t_w_i);
+  Sophus::SE3d T_gt_est;
+  Sophus::Sim3d sT_gt_est;
+
+  granite::alignSVD(kf_t_ns, vio_t_w_i, gt_frame_t_ns, gt_frame_t_w_i, T_gt_est,
+                    sT_gt_est);
 }

@@ -6,11 +6,22 @@ https://github.com/DLR-RM/granite
 
 Copyright (c) Martin Wudenka, Deutsches Zentrum für Luft- und Raumfahrt
 
-Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+Permission is hereby granted, free of charge, to any person obtaining a copy of
+this software and associated documentation files (the "Software"), to deal in
+the Software without restriction, including without limitation the rights to
+use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
+the Software, and to permit persons to whom the Software is furnished to do so,
+subject to the following conditions:
 
-The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
 
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS
+FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
+COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
+IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
+CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
 /**
@@ -468,7 +479,7 @@ void extractNonlinearFactors(granite::MargData& m) {
 
     Sophus::Matrix6d d_res_d_T_w_i, d_res_d_T_w_j;
     granite::relPoseError(T_kf_o, T_w_i_kf, T_w_i_o, &d_res_d_T_w_i,
-                         &d_res_d_T_w_j);
+                          &d_res_d_T_w_j);
 
     Eigen::MatrixXd J;
     J.setZero(se3_SIZE, asize);
@@ -582,8 +593,11 @@ double alignButton() {
     filter_t_w_i.emplace_back(kv.second.getPose().translation());
   }
 
+  Sophus::SE3d T_gt_est;
+  Sophus::Sim3d sT_gt_est;
+
   return granite::alignSVD(filter_t_ns, filter_t_w_i, gt_frame_t_ns,
-                          gt_frame_t_w_i);
+                           gt_frame_t_w_i, T_gt_est, sT_gt_est).first;
 }
 
 void setup_points() {
