@@ -37,10 +37,10 @@ Download the sequences (`data_odometry_gray.zip`) from the dataset and extract i
 ```
 # We assume you have extracted the sequences in ~/dataset_gray/sequences/
 # Convert calibration to the granite format
-granite_convert_kitti_calib.py ~/dataset_gray/sequences/00/
+granite_convert_kitti_calib.py -d ~/dataset_gray/sequences/00/
 
 # If you want to convert calibrations for all sequences use the following command
-for i in {00..21}; do granite_convert_kitti_calib.py ~/dataset_gray/sequences/$i/; done
+for i in {00..21}; do granite_convert_kitti_calib.py -d ~/dataset_gray/sequences/$i/; done
 ```
 Optionally you can also copy the provided ground-truth poses to `poses.txt` in the corresponding sequence.
 
