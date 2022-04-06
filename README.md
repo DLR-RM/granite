@@ -38,9 +38,6 @@ NOTE: It is possible to compile the code on Ubuntu 16.04, but you need to instal
 * [Visual-inertial odometry and mapping. (TUM-VI and Euroc datasets)](doc/VioMapping.md)
 * [Simulation tools to test different components of the system.](doc/Simulation.md)
 
-## Device support
-* [Tutorial on Camera-IMU and Motion capture calibration with Realsense T265.](doc/Realsense.md)
-
 ## Development
 * [Development environment setup.](doc/DevSetup.md)
 

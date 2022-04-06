@@ -245,15 +245,6 @@ target_link_libraries(granite_time_alignment granite pangolin)
 add_executable(granite_kitti_eval src/kitti_eval.cpp)
 target_link_libraries(granite_kitti_eval)
 
-find_package(realsense2 QUIET)
-if(realsense2_FOUND)
-  add_executable(granite_rs_t265_record src/rs_t265_record.cpp src/device/rs_t265.cpp)
-  target_link_libraries(granite_rs_t265_record granite realsense2::realsense2 ${OpenCV_LIBS} pangolin)
-
-  add_executable(granite_rs_t265_vio src/rs_t265_vio.cpp src/device/rs_t265.cpp)
-  target_link_libraries(granite_rs_t265_vio granite realsense2::realsense2 pangolin)
-endif()
-
 
 
 install(TARGETS granite_calibrate granite_calibrate_imu granite_vio_sim granite_mapper_sim granite_mapper_sim_naive granite_mapper granite_opt_flow granite_vio granite_kitti_eval granite_time_alignment granite
@@ -261,14 +252,6 @@ install(TARGETS granite_calibrate granite_calibrate_imu granite_vio_sim granite_
   RUNTIME DESTINATION ${CMAKE_INSTALL_PREFIX}/bin
   LIBRARY DESTINATION ${CMAKE_INSTALL_PREFIX}/lib
   ARCHIVE DESTINATION ${CMAKE_INSTALL_PREFIX}/lib)
-
-if(realsense2_FOUND)
-    install(TARGETS granite_rs_t265_record granite_rs_t265_vio
-      EXPORT GraniteTargets
-      RUNTIME DESTINATION ${CMAKE_INSTALL_PREFIX}/bin
-      LIBRARY DESTINATION ${CMAKE_INSTALL_PREFIX}/lib
-      ARCHIVE DESTINATION ${CMAKE_INSTALL_PREFIX}/lib)
-endif()
 
 file(GLOB SCRIPTS_TO_INSTALL "${CMAKE_CURRENT_SOURCE_DIR}/scripts/granite_*.py")
 install(PROGRAMS ${SCRIPTS_TO_INSTALL} DESTINATION ${CMAKE_INSTALL_PREFIX}/bin)
