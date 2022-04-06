@@ -68,6 +68,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <granite/spline/se3_spline.h>
 #include <granite/utils/sim_utils.h>
 #include <granite/utils/vis_utils.h>
+#include <granite/utils/filesystem.h>
 #include <granite/vi_estimator/keypoint_vio.h>
 
 #include <granite/calibration/calibration.hpp>
@@ -772,9 +773,9 @@ void compute_projections() {
 }
 
 void load_spline(std::string spline_path) {
-  std::filesystem::path path = spline_path;
+  granite::fs::path path = spline_path;
 
-  if (!std::filesystem::exists(path)) {
+  if (!granite::fs::exists(path)) {
     std::cout << "Spline file " << path << " does not exist!" << std::endl;
     return;
   }
