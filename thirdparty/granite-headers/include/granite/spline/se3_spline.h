@@ -85,9 +85,9 @@ class Se3SplineBase {
   using SO3 = Sophus::SO3<Scalar>;
   using SE3 = Sophus::SE3<Scalar>;
 
-  [[nodiscard]] virtual inline int getOrder() = 0;
+  [[nodiscard]] virtual int getOrder() = 0;
 
-  [[nodiscard]] virtual inline int getDegree() = 0;
+  [[nodiscard]] virtual int getDegree() = 0;
 
   /// @brief Gererate random trajectory
   ///
@@ -111,18 +111,18 @@ class Se3SplineBase {
   /// @brief Add knot to the end of the spline
   ///
   /// @param[in] knot knot to add
-  virtual inline void knots_push_back(const SE3 &knot) = 0;
+  virtual void knots_push_back(const SE3 &knot) = 0;
 
   /// @brief Remove knot from the back of the spline
-  virtual inline void knots_pop_back() = 0;
+  virtual void knots_pop_back() = 0;
 
   /// @brief Return the first knot of the spline
   ///
   /// @return first knot of the spline
-  virtual inline SE3 knots_front() const = 0;
+  virtual SE3 knots_front() const = 0;
 
   /// @brief Remove first knot of the spline and increase the start time
-  virtual inline void knots_pop_front() = 0;
+  virtual void knots_pop_front() = 0;
 
   /// @brief Return the last knot of the spline
   ///
@@ -142,30 +142,30 @@ class Se3SplineBase {
   ///
   /// @param i index of the knot
   /// @return reference to the SO(3) knot
-  virtual inline SO3 &getKnotSO3(size_t i) = 0;
+  virtual SO3 &getKnotSO3(size_t i) = 0;
 
   /// @brief Return const reference to the SO(3) knot with index i
   ///
   /// @param i index of the knot
   /// @return const reference to the SO(3) knot
-  virtual inline const SO3 &getKnotSO3(size_t i) const = 0;
+  virtual const SO3 &getKnotSO3(size_t i) const = 0;
 
   /// @brief Return reference to the position knot with index i
   ///
   /// @param i index of the knot
   /// @return reference to the position knot
-  virtual inline Vec3 &getKnotPos(size_t i) = 0;
+  virtual Vec3 &getKnotPos(size_t i) = 0;
 
   /// @brief Return const reference to the position knot with index i
   ///
   /// @param i index of the knot
   /// @return const reference to the position knot
-  virtual inline const Vec3 &getKnotPos(size_t i) const = 0;
+  virtual const Vec3 &getKnotPos(size_t i) const = 0;
 
   /// @brief Set start time for spline
   ///
   /// @param[in] start_time_ns start time of the spline in nanoseconds
-  virtual inline void setStartTimeNs(int64_t s) = 0;
+  virtual void setStartTimeNs(int64_t s) = 0;
 
   /// @brief Maximum time represented by spline
   ///
@@ -183,17 +183,17 @@ class Se3SplineBase {
   /// @brief Linear acceleration in the world frame.
   ///
   /// @param[in] time_ns time to evaluate linear acceleration in nanoseconds
-  virtual inline Vec3 transAccelWorld(int64_t time_ns) const = 0;
+  virtual Vec3 transAccelWorld(int64_t time_ns) const = 0;
 
   /// @brief Linear velocity in the world frame.
   ///
   /// @param[in] time_ns time to evaluate linear velocity in nanoseconds
-  virtual inline Vec3 transVelWorld(int64_t time_ns) const = 0;
+  virtual Vec3 transVelWorld(int64_t time_ns) const = 0;
 
   /// @brief Rotational velocity in the body frame.
   ///
   /// @param[in] time_ns time to evaluate rotational velocity in nanoseconds
-  virtual inline Vec3 rotVelBody(int64_t time_ns) const = 0;
+  virtual Vec3 rotVelBody(int64_t time_ns) const = 0;
 
   /// @brief Evaluate pose.
   ///
@@ -230,16 +230,16 @@ class Se3SplineBase {
                              const Eigen::Vector3d &g) const = 0;
 
   /// @brief Print knots for debugging.
-  virtual inline void print_knots() const = 0;
+  virtual void print_knots() const = 0;
 
   /// @brief Print position knots for debugging.
-  virtual inline void print_pos_knots() const = 0;
+  virtual void print_pos_knots() const = 0;
 
   /// @brief Knot time interval in nanoseconds.
   [[nodiscard]] inline int64_t getDtNs() const { return dt_ns; }
 
   /// @brief Set time interval in nanoseconds
-  virtual inline void setDtNs(int64_t new_dt_ns) { dt_ns = new_dt_ns; }
+  virtual void setDtNs(int64_t new_dt_ns) { dt_ns = new_dt_ns; }
 
  protected:
 
