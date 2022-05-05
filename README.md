@@ -1,6 +1,6 @@
 ## Granite
 
-This project contains the code for the IEEE IROS 2021 paper **Towards Robust Monocular Visual Odometry for Flying Robots on Planetary Missions**, M. Wudenka, M. G. Müller, N. Demmel, A. Wedler, R. Triebel, D. Cremers, W. Stürzl.
+This project contains the code for the IEEE IROS 2021 paper [**Towards Robust Monocular Visual Odometry for Flying Robots on Planetary Missions**](https://ieeexplore.ieee.org/abstract/document/9636844), M. Wudenka, M. G. Müller, N. Demmel, A. Wedler, R. Triebel, D. Cremers, W. Stürzl.
 
 It is mainly build on [basalt](https://vision.in.tum.de/research/vslam/basalt).
 
